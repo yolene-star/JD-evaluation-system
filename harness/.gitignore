@@ -1,0 +1,4 @@
+reports/quality/*
+!reports/quality/.gitkeep
+__pycache__/
+*.pyc

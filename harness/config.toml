@@ -1,0 +1,20 @@
+[[models]]
+id = "deterministic-fallback"
+provider = "local"
+model = "deterministic-parser"
+base_url_env = ""
+api_key_env = ""
+
+[[models]]
+id = "deepseek-chat"
+provider = "openai-compatible"
+model = "deepseek-chat"
+base_url_env = "LLM_BASE_URL"
+api_key_env = "DEEPSEEK_API_KEY"
+
+[[models]]
+id = "deepseek-reasoner"
+provider = "openai-compatible"
+model = "deepseek-reasoner"
+base_url_env = "LLM_BASE_URL"
+api_key_env = "DEEPSEEK_API_KEY"

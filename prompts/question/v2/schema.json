@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["content", "covered_competency_ids", "turn_type"],
+  "properties": {
+    "content": {"type": "string", "minLength": 1},
+    "covered_competency_ids": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "turn_type": {"type": "string", "enum": ["MAIN_QUESTION", "FOLLOW_UP"]},
+    "evaluation_target": {"type": ["string", "null"]},
+    "expected_evidence": {"type": "array", "items": {"type": "string"}},
+    "background_reference": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "source_type": {"const": "BACKGROUND_ONLY"},
+        "item_id": {"type": "string"},
+        "item_type": {"type": "string", "enum": ["education", "project", "skill", "experience"]},
+        "display_summary": {"type": "string", "maxLength": 500}
+      }
+    }
+  }
+}

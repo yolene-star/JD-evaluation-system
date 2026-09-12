@@ -254,9 +254,18 @@ class InterviewAgent:
         competency = next(item for item in snapshot.competencies if item.id == target_id)
         if decision.action is AgentAction.FOLLOW_UP:
             analysis = analysis_by_id[target_id]
+            follow_up_count = next(
+                (
+                    item.follow_up_count
+                    for item in context.competencies
+                    if item.competency_id == target_id
+                ),
+                1,
+            )
             question = self.question_tool.generate_follow_up(
                 competency=competency,
                 analysis=analysis,
+                follow_up_count=follow_up_count,
                 agent_context=context.model_dump(mode="json"),
             )
         else:
@@ -325,7 +334,10 @@ class InterviewAgent:
             )
             .order_by(AssessmentTurn.turn_index.desc())
         ).first()
-        if existing is not None:
+        if existing is not None and not self._question_has_answer_after(
+            session.id,
+            existing,
+        ):
             return {
                 "id": existing.id,
                 "content": existing.content,
@@ -394,6 +406,24 @@ class InterviewAgent:
             ),
             "background_reference": question.background_reference,
         }
+
+    def _question_has_answer_after(
+        self,
+        session_id: str,
+        question: AssessmentTurn,
+    ) -> bool:
+        return (
+            self.db.scalar(
+                select(AssessmentTurn.id)
+                .where(
+                    AssessmentTurn.session_id == session_id,
+                    AssessmentTurn.role == AssessmentTurnRole.USER,
+                    AssessmentTurn.turn_index > question.turn_index,
+                )
+                .limit(1)
+            )
+            is not None
+        )
 
     def _retry_result(
         self,

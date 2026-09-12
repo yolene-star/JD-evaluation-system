@@ -5,8 +5,9 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from ..db import get_db
-from ..models import ChatMessage, Competency, Evidence, JobDescription, LLMCallLog, ModelVersion, Project
+from ..models import ChatMessage, Competency, Evidence, JobDescription, ModelVersion, Project
 from ..services.llm import generate_reply
+from ..services.llm_observability import record_llm_call
 from ..services.audit import record_event
 from ..services.analysis import analyze_project_jds
 from ..services.commands import extract_pasted_jd
@@ -86,18 +87,18 @@ def chat(project_id: str, payload: dict, db: Session = Depends(get_db), x_llm_ap
         preview = preview_for(intent)
         if preview and not bool(payload.get("confirm", False)):
             _save_message(db, project.id, "agent", preview["reply"])
-            db.add(LLMCallLog(project_id=project.id, task_type="stage1-intent", model="deepseek-chat" if intent_source == "llm-tool" else "deterministic-router", status=intent_source, latency_ms=intent_latency, error=intent_error))
+            record_llm_call(db, project_id=project.id, task_type="stage1-intent", model="deepseek-chat" if intent_source == "llm-tool" else "deterministic-router", prompt_version="stage1-intent-v1", status=intent_source, latency_ms=intent_latency, error=intent_error)
             db.commit()
             return {**preview, "source": "command-preview", "project_status": project.status}
         tool_result = execute_stage1_tool(db, project, intent)
         _save_message(db, project.id, "agent", tool_result["reply"])
         for notice in tool_result["system_notices"]:
             _save_system_notice(db, project.id, notice)
-        db.add(LLMCallLog(project_id=project.id, task_type="stage1-intent", model="deepseek-chat" if intent_source == "llm-tool" else "deterministic-router", status=intent_source, latency_ms=intent_latency, error=intent_error))
+        record_llm_call(db, project_id=project.id, task_type="stage1-intent", model="deepseek-chat" if intent_source == "llm-tool" else "deterministic-router", prompt_version="stage1-intent-v1", status=intent_source, latency_ms=intent_latency, error=intent_error)
         db.commit()
         return {**tool_result, "source": intent_source, "project_status": project.status}
     reply, source, latency, error = generate_reply(project.name, project.status.value, message, context, api_key=x_llm_api_key)
     _save_message(db, project.id, "agent", reply)
-    db.add(LLMCallLog(project_id=project.id, task_type="stage1-chat", model="deepseek-chat" if source == "llm" else "demo-fallback", status=source, latency_ms=latency, error=error))
+    record_llm_call(db, project_id=project.id, task_type="stage1-chat", model="deepseek-chat" if source == "llm" else "demo-fallback", prompt_version="stage1-chat-v1", status=source, latency_ms=latency, error=error)
     db.commit()
     return {"reply": reply, "source": source, "project_status": project.status, "error": error}

@@ -56,6 +56,11 @@ def create_app() -> FastAPI:
                     for name, definition in additions.items():
                         if name not in existing:
                             connection.execute(text(f"ALTER TABLE {table} ADD COLUMN {name} {definition}"))
+                llm_columns = {column["name"] for column in inspect(engine).get_columns("llm_call_logs")}
+                if "run_id" not in llm_columns:
+                    connection.execute(text("ALTER TABLE llm_call_logs ADD COLUMN run_id VARCHAR(80)"))
+                if "usage_json" not in llm_columns:
+                    connection.execute(text("ALTER TABLE llm_call_logs ADD COLUMN usage_json JSON NOT NULL DEFAULT '{}'"))
 
     @app.get("/api/health", response_model=HealthResponse)
     def health() -> HealthResponse:

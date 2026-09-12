@@ -304,29 +304,9 @@ def analyze_answer(snapshot: Any, competency: Any, jd_evidence: list[Any], trans
         raise InvalidAIResponse("分析能力项不属于确认快照")
     competency_payload = asdict(competency) if is_dataclass(competency) else dict(competency)
     def demo_analysis() -> ValidatedAnalysis:
-        # The local/demo workflow must remain usable without a provider key or
-        # when a configured provider is unavailable. Keep this adapter
-        # deterministic and grounded entirely in the submitted answer.
-        text = answer.strip()
-        refusal = re.search(r"^(我不会|不会|不知道|没有经验|暂无经验|不清楚)[。！!，,、\s]*$", text) is not None
-        sufficient = len(text) >= 12 and not refusal
-        result = AnalysisResult(
-            answer_summary=text or "未提供回答",
-            evidence=[
-                EvidenceResult(
-                    competency_id=competency.id,
-                    type=EvidenceType.POSITIVE if sufficient else EvidenceType.UNCERTAIN,
-                    excerpt=text,
-                    summary="演示模式基于回答原文保留证据",
-                    confidence=0.6 if sufficient else 0.3,
-                    validation_note=None if text else "回答为空",
-                )
-            ] if text else [],
-            evidence_sufficiency="SUFFICIENT" if sufficient else "INSUFFICIENT",
-            needs_follow_up=not sufficient,
-            follow_up_reason="需要更多具体做法、依据和结果" if not sufficient else "",
-            follow_up_question=f"请具体说明你在{competency.name}中的做法、依据和结果" if not sufficient else "",
-        )
+        from .fallback_analysis import analyze_deterministic_answer
+
+        result = analyze_deterministic_answer(answer, competency.id, competency.name)
         return validate_analysis(result, answer, competency.id)
 
     # Offline/demo mode is explicit when analysis is disabled or no provider

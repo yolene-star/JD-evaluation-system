@@ -1,0 +1,22 @@
+{
+  "jd_parsing": {
+    "version": "v2",
+    "system": "prompts/jd_parsing/v2/system.txt",
+    "schema": "prompts/jd_parsing/v2/schema.json"
+  },
+  "question": {
+    "version": "v2",
+    "system": "prompts/question/v2/system.txt",
+    "schema": "prompts/question/v2/schema.json"
+  },
+  "analysis": {
+    "version": "v2",
+    "system": "prompts/analysis/v2/system.txt",
+    "schema": "prompts/analysis/v2/schema.json"
+  },
+  "profile": {
+    "version": "v2",
+    "system": "prompts/profile/v2/system.txt",
+    "schema": "prompts/profile/v2/schema.json"
+  }
+}

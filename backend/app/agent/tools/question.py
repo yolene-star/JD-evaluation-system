@@ -46,11 +46,14 @@ class QuestionTool:
         *,
         competency: Any,
         analysis: Any,
+        follow_up_count: int | None = None,
         **_kwargs: Any,
     ) -> GeneratedQuestion:
         content = str(getattr(analysis, "follow_up_question", "") or "").strip()
         if not content:
             content = f"请补充说明你在{getattr(competency, 'name', competency.id)}中的具体做法、依据和结果。"
+        if follow_up_count and follow_up_count > 1:
+            content = f"第 {follow_up_count} 次补充：{content}"
         return GeneratedQuestion(
             content=content,
             covered_competency_ids=[competency.id],

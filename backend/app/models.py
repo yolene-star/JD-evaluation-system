@@ -125,11 +125,13 @@ class LLMCallLog(Base):
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid4()))
     project_id: Mapped[str] = mapped_column(ForeignKey("projects.id"), index=True)
+    run_id: Mapped[str | None] = mapped_column(String(80), nullable=True, index=True)
     task_type: Mapped[str] = mapped_column(String(80))
     model: Mapped[str] = mapped_column(String(120))
     prompt_version: Mapped[str] = mapped_column(String(40), default="stage1-chat-v1")
     status: Mapped[str] = mapped_column(String(30))
     latency_ms: Mapped[int | None] = mapped_column(nullable=True)
+    usage_json: Mapped[dict] = mapped_column(JSON, default=dict)
     error: Mapped[str | None] = mapped_column(Text, nullable=True)
 
 

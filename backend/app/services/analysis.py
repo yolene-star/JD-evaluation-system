@@ -2,9 +2,10 @@ from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
 from ..config import is_llm_analysis_enabled, settings
-from ..models import Competency, Evidence, JobDescription, JobDescriptionStatus, LLMCallLog, Project, ProjectStatus
+from ..models import Competency, Evidence, JobDescription, JobDescriptionStatus, Project, ProjectStatus
 from .ai_parsing import PROMPT_VERSION, parse_jd_with_llm
 from .audit import record_event
+from .llm_observability import record_llm_call
 from .parsing import parse_jd
 
 
@@ -26,7 +27,8 @@ def analyze_project_jds(db: Session, project: Project, *, jd_ids: set[str] | Non
             parsed, source, latency, error = parse_jd_with_llm(jd.raw_text)
         else:
             parsed, source, latency, error = parse_jd(jd.raw_text), "deterministic", None, None
-        db.add(LLMCallLog(
+        record_llm_call(
+            db,
             project_id=project.id,
             task_type="stage1-jd-analysis",
             model=settings.llm_model if source == "llm" else "deterministic-parser",
@@ -34,7 +36,7 @@ def analyze_project_jds(db: Session, project: Project, *, jd_ids: set[str] | Non
             status=source,
             latency_ms=latency,
             error=error,
-        ))
+        )
         parser_sources[jd.id] = source
         if not parsed.competencies:
             jd.status = JobDescriptionStatus.FAILED

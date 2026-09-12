@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["overview", "strengths", "weaknesses", "recommendations", "cited_evidence_ids"],
+  "properties": {
+    "overview": {"type": "string"},
+    "strengths": {"type": "array", "items": {"type": "object"}},
+    "weaknesses": {"type": "array", "items": {"type": "object"}},
+    "recommendations": {"type": "array", "items": {"type": "object"}},
+    "cited_evidence_ids": {"type": "array", "items": {"type": "string"}}
+  }
+}

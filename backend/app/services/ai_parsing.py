@@ -5,9 +5,10 @@ from urllib.request import Request, urlopen
 
 from ..config import get_llm_api_key, settings
 from .parsing import ParsedCompetency, ParsedJd, parse_jd
+from .prompt_registry import JD_PARSE_PROMPT_VERSION, load_prompt
 
 
-PROMPT_VERSION = "stage1-jd-analysis-v1"
+PROMPT_VERSION = JD_PARSE_PROMPT_VERSION
 
 
 def _fallback(text: str, started: float, error: str) -> tuple[ParsedJd, str, int, str]:
@@ -85,6 +86,7 @@ def parse_jd_with_llm(
         return parse_jd(text), "deterministic-fallback", None, "未配置 LLM API Key"
 
     url = settings.llm_base_url.rstrip("/") + "/v1/chat/completions"
+    prompt = load_prompt("jd_parsing", "v2")
     schema_instruction = {
         "competencies": [{
             "name": "简洁、规范的能力名称",
@@ -102,10 +104,9 @@ def parse_jd_with_llm(
             {
                 "role": "system",
                 "content": (
-                    "你是岗位 JD 结构化抽取器。只依据用户提供的 JD 原文抽取岗位能力、资历要求和约束。"
-                    "不得补充原文没有的信息。每个能力必须提供一段逐字复制、连续且足以支持该能力的 evidence_excerpt。"
-                    "只返回 JSON，不要 Markdown。输出结构示例："
-                    + json.dumps(schema_instruction, ensure_ascii=False)
+                    prompt.system
+                    + "\nJSON Schema："
+                    + json.dumps(prompt.schema or schema_instruction, ensure_ascii=False)
                 ),
             },
             {"role": "user", "content": text},

@@ -287,12 +287,18 @@ def test_missing_key_uses_deterministic_demo_analysis(monkeypatch) -> None:
     snapshot = ConfirmedModelSnapshot("m1", "p1", "v1.0", (ConfirmedCompetency("c1", "系统设计", "", 1.0, ()),))
     monkeypatch.setattr("backend.app.services.assessment_ai.get_llm_api_key", lambda: None)
 
-    result = analyze_answer(snapshot, snapshot.competencies[0], [], [], "我在项目中负责系统设计并完成了容量评估")
+    result = analyze_answer(
+        snapshot,
+        snapshot.competencies[0],
+        [],
+        [],
+        "当时系统面临容量风险；我负责系统设计并完成容量评估，因为需要兼顾成本与可靠性，最终支撑请求量提升 3 倍，并完成复盘。",
+    )
 
     assert result.evidence_sufficiency == "SUFFICIENT"
     assert result.needs_follow_up is False
     assert result.evidence[0].competency_id == "c1"
-    assert result.evidence[0].excerpt == "我在项目中负责系统设计并完成了容量评估"
+    assert result.evidence[0].excerpt in "当时系统面临容量风险；我负责系统设计并完成容量评估，因为需要兼顾成本与可靠性，最终支撑请求量提升 3 倍，并完成复盘。"
 
 
 def test_provider_failure_falls_back_to_demo_analysis(monkeypatch) -> None:
