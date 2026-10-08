@@ -104,9 +104,9 @@ AppShell
 | 确认/导出 | `FinalReview`、`CompletedStage` | `/api/models/{id}/confirm`、`/export` | 生成不可变快照并可下载 |
 | 对话/工作台一致 | `ConversationTimeline`、`OperationCard` | `/events` | 每次操作可审计、刷新后状态保持 |
 
-## 7. 原型对应关系
+## 7. 组件对应关系
 
-`.superpowers/brainstorm` 中的阶段一原型作为交互参考，不直接逐页复制到生产代码。最终实现收敛到上述组件：添加材料（`stage1-document-picker*`）、解析状态/失败（`stage1-parsing-progress*`、`stage1-parse-failure*`）、单 JD/总模型（`stage1-single-jd-model*`、`stage1-total-model`）、证据与详情（`stage1-item-detail*`、`stage1-jd-source-trace*`）、冲突与确认（`stage1-conflict-*`、`stage1-final-review*`、`stage1-complete*`）。带 `v2/v3` 的文件视为迭代稿，开发以本设计和实施计划为准。
+过程性 HTML 原型已清理，开发以本设计和实施计划为准。实现组件包括：添加材料（`MaterialDialog`）、解析失败（`ParseFailure`）、单 JD/总模型（`SingleJdModel`、`TotalModel`）、证据与详情（`EvidenceView`、`CompetencyDetail`）、冲突与确认（`ConflictDecision`、`FinalReview`、`CompletedStage`）。
 
 ## 8. 阶段一前端验收
 

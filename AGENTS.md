@@ -24,10 +24,10 @@
 
 核心需求与背景：
 
-- `02.胜任力测评与人才画像系统需求.md`
-- `03.实验技术方案概述.md`
-- `阶段三：能力评价与人才画像.md`
-- `阶段四：系统质量评估与持续优化.md`
+- `docs/requirements/02.胜任力测评与人才画像系统需求.md`
+- `docs/requirements/03.实验技术方案概述.md`
+- `docs/requirements/阶段三：能力评价与人才画像.md`
+- `docs/requirements/阶段四：系统质量评估与持续优化.md`
 
 已确认设计：
 
@@ -44,7 +44,7 @@
 - 总体顺序：`docs/superpowers/plans/2026-09-09-full-implementation-roadmap.md`
 - 阶段一：`docs/superpowers/plans/2026-09-09-stage1-implementation.md`
 - 阶段二：`docs/superpowers/plans/2026-09-09-stage2-adaptive-assessment-implementation.md`
-- 阶段三目前有规格但尚需补充详细实施计划。
+- 阶段三：`docs/superpowers/plans/2026-09-10-stage3-implementation.md`
 
 发生冲突时按以下规则处理：
 

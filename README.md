@@ -185,6 +185,8 @@ git diff --check
 
 ## 目录索引
 
+架构与模块职责见 [架构说明](docs/architecture/README.md)，需求、设计、计划和报告见 [文档导航](docs/README.md)。
+
 ```text
 backend/app/agent/       Agent、Planner、Memory、Tools
 backend/app/services/    解析、状态机、证据、评分、报告和隐私逻辑
@@ -197,7 +199,14 @@ harness/quality_runner.py 离线和多模型质量评测 Runner
 frontend/src/            React 应用与三阶段工作台
 frontend/tests/           Vitest/Playwright 测试
 docs/                    规格、实施计划和隐私说明
+docs/requirements/       业务需求、技术方案与阶段说明
+docs/reports/            课程与实习报告
+docs/architecture/       当前架构、模块职责与数据流
+design/                  已确认的全局交互与阶段一设计
+integrations/jd-extraction/ 用户主动操作的浏览器 JD 提取工具
 ```
+
+临时原型、Agent 执行记录、渲染中间文件和构建缓存不作为项目资料保留。Vite 配置的 TypeScript 编译产物写入 `frontend/.cache/`；前端发布产物写入 `frontend/dist/`，两者均被 Git 忽略。
 
 ## 隐私与安全边界
 

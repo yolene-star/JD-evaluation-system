@@ -20,3 +20,8 @@ integrations/jd-extraction/**/dist/
 integrations/jd-extraction/**/build/
 .cleanup-backup/
 .worktrees/
+.superpowers/
+report_render/
+frontend/.cache/
+frontend/vite.config.js
+frontend/vite.config.d.ts

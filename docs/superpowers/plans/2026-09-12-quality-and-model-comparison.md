@@ -554,7 +554,7 @@ Record model, prompt version, sample count, precision, recall, F1, evidence-supp
 
 **Files:**
 - Modify: `README.md`
-- Modify: `阶段四：系统质量评估与持续优化.md`
+- Modify: `docs/requirements/阶段四：系统质量评估与持续优化.md`
 - Modify: report builder used for `课程大作业报告-AI驱动的岗位胜任力测评与人才画像系统.docx`
 - Modify: `课程大作业报告-AI驱动的岗位胜任力测评与人才画像系统.docx`
 
