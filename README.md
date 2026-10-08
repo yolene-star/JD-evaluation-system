@@ -198,7 +198,7 @@ harness/fixtures/quality/ 100 条混合样例和 192 条 JD 参考模型
 harness/quality_runner.py 离线和多模型质量评测 Runner
 frontend/src/            React 应用与三阶段工作台
 frontend/tests/           Vitest/Playwright 测试
-docs/                    规格、实施计划和隐私说明
+docs/                    需求、规格、架构、报告和隐私说明
 docs/requirements/       业务需求、技术方案与阶段说明
 docs/reports/            课程与实习报告
 docs/architecture/       当前架构、模块职责与数据流
@@ -216,4 +216,4 @@ integrations/jd-extraction/ 用户主动操作的浏览器 JD 提取工具
 - 正式结论必须回溯到原始 JD 或用户面试回答；
 - 缺少证据时显示“待补充”“不确定”或“未评价”，不得推测补全。
 
-三阶段实施计划见：[2026-09-12-three-stage-project-plan.md](docs/superpowers/plans/2026-09-12-three-stage-project-plan.md)。
+三阶段功能与 UI 规格见 [文档导航](docs/README.md)。

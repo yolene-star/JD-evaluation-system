@@ -19,7 +19,7 @@
 | `prompts/` | 版本化 Prompt、输出 Schema 和清单 |
 | `harness/` | 离线质量样例、评测 Runner 和样例生成器 |
 | `integrations/jd-extraction/` | 用户主动触发的浏览器提取、站点适配与本地 Collector |
-| `docs/`、`design/` | 需求、规格、计划、报告和已确认交互设计 |
+| `docs/`、`design/` | 需求、规格、架构、报告和已确认交互设计 |
 
 上述路径均相对于仓库根目录。根目录的 `start_project.ps1` 和 `start_project.bat` 是统一启动入口。
 
@@ -53,4 +53,4 @@ AI 通过 `llm.py`、`structured_llm.py` 和阶段适配服务参与语义处理
 
 当前 `App.tsx` 同时编排三个阶段，后端服务仍主要平铺；`main.py` 同时执行建表与 SQLite 补字段，Alembic 的现有首个迁移仅添加日志字段。这些属于后续代码重构范围，本次目录清理未改变它们。数据库迁移整理须先覆盖全新数据库和已有数据库的升级路径，不能直接移除兼容逻辑。
 
-验证命令和启动方式见 [项目 README](../../README.md)，规格与实施入口见 [文档导航](../README.md)。
+验证命令和启动方式见 [项目 README](../../README.md)，规格与开发入口见 [文档导航](../README.md)。

@@ -19,17 +19,7 @@
 - [可选简历上下文](superpowers/specs/2026-09-10-stage2-optional-resume-context-design.md)
 - [质量评估和模型比较](superpowers/specs/2026-09-12-quality-and-model-comparison-design.md)
 
-`superpowers/specs/` 保留产品规格，`superpowers/plans/` 保留实施计划；它们是项目依据。临时 HTML 原型、预览服务状态和逐任务执行记录已清理。
-
-## 实施入口
-
-- [总体路线图](superpowers/plans/2026-09-09-full-implementation-roadmap.md)
-- [阶段一](superpowers/plans/2026-09-09-stage1-implementation.md)
-- [阶段二](superpowers/plans/2026-09-09-stage2-adaptive-assessment-implementation.md)
-- [阶段三](superpowers/plans/2026-09-10-stage3-implementation.md)
-- [三阶段闭环改进](superpowers/plans/2026-09-12-three-stage-project-plan.md)
-
-实施计划的复选框是历史执行记录，不能单独证明当前功能是否完成。以实际代码和本次测试结果核对实现状态；发生冲突时遵循 [AGENTS.md](../AGENTS.md) 中的权威顺序。
+`superpowers/specs/` 保留规格。历史实施计划、路线图、临时 HTML 原型、预览服务状态和逐任务执行记录已清理。开发以需求、已确认规格、实际代码和测试结果为依据；发生冲突时遵循 [AGENTS.md](../AGENTS.md) 中的权威顺序。
 
 ## 隐私、评估与报告
 

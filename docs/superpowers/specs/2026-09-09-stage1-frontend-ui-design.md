@@ -106,7 +106,7 @@ AppShell
 
 ## 7. 组件对应关系
 
-过程性 HTML 原型已清理，开发以本设计和实施计划为准。实现组件包括：添加材料（`MaterialDialog`）、解析失败（`ParseFailure`）、单 JD/总模型（`SingleJdModel`、`TotalModel`）、证据与详情（`EvidenceView`、`CompetencyDetail`）、冲突与确认（`ConflictDecision`、`FinalReview`、`CompletedStage`）。
+过程性 HTML 原型和实施计划已清理，开发以本设计为准。实现组件包括：添加材料（`MaterialDialog`）、解析失败（`ParseFailure`）、单 JD/总模型（`SingleJdModel`、`TotalModel`）、证据与详情（`EvidenceView`、`CompetencyDetail`）、冲突与确认（`ConflictDecision`、`FinalReview`、`CompletedStage`）。
 
 ## 8. 阶段一前端验收
 
